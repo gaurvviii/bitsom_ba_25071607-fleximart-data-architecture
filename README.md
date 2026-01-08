@@ -1,8 +1,15 @@
 # FlexiMart Data Architecture Project
 
-This project demonstrates a comprehensive data architecture solution for FlexiMart, covering traditional relational databases, NoSQL databases, and data warehousing approaches.
+**Student Name:** [Your Name]  
+**Student ID:** [Your ID]  
+**Email:** [Your Email]  
+**Date:** 2024
 
-## Project Structure
+## Project Overview
+
+This project demonstrates a comprehensive data architecture solution for FlexiMart, an e-commerce company. The solution covers the complete data pipeline from raw CSV files to a fully functional analytics system, including ETL processes, relational database design, NoSQL database analysis, and data warehousing with star schema implementation.
+
+## Repository Structure
 
 ```
 studentID-fleximart-data-architecture/
@@ -13,7 +20,8 @@ studentID-fleximart-data-architecture/
 ├── data/                               # Input data files (provided)
 │   ├── customers_raw.csv
 │   ├── products_raw.csv
-│   └── sales_raw.csv
+│   ├── sales_raw.csv
+│   └── products_catalogs.json
 │
 ├── part1-database-etl/
 │   ├── README.md                       # Part 1 overview
@@ -37,40 +45,125 @@ studentID-fleximart-data-architecture/
     └── analytics_queries.sql
 ```
 
-## Overview
+## Technologies Used
 
-This project is divided into three main parts:
+- **Python 3.8+** with pandas, mysql-connector-python
+- **MySQL 8.0** / PostgreSQL 14 (for Part 1 and Part 3)
+- **MongoDB 6.0** (for Part 2)
+- **SQL** for database queries and analytics
+
+## Setup Instructions
+
+### Prerequisites
+
+1. Install Python 3.8 or higher
+2. Install MySQL or PostgreSQL
+3. Install MongoDB (for Part 2)
+
+### Database Setup
+
+```bash
+# Create databases
+mysql -u root -p -e "CREATE DATABASE fleximart;"
+mysql -u root -p -e "CREATE DATABASE fleximart_dw;"
+```
 
 ### Part 1: Database ETL
-- ETL pipeline implementation
-- Database schema design and documentation
-- Business intelligence queries
-- Data quality reporting
+
+```bash
+# Navigate to Part 1 directory
+cd part1-database-etl
+
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Configure database connection in .env file
+# DB_HOST=localhost
+# DB_NAME=fleximart
+# DB_USER=root
+# DB_PASSWORD=your_password
+
+# Run ETL Pipeline
+python etl_pipeline.py
+
+# Run Business Queries
+mysql -u root -p fleximart < business_queries.sql
+```
 
 ### Part 2: NoSQL
-- NoSQL database analysis
-- MongoDB operations
-- Product catalog in JSON format
+
+```bash
+# Start MongoDB service
+brew services start mongodb-community  # macOS
+# or
+mongod --dbpath /path/to/data
+
+# Import product catalog
+mongoimport --db fleximart_catalog --collection products --file products_catalog.json --jsonArray
+
+# Run MongoDB operations
+mongosh fleximart_catalog < mongodb_operations.js
+```
 
 ### Part 3: Data Warehouse
-- Star schema design
-- Data warehouse implementation
-- Analytics queries for business intelligence
 
-## Getting Started
+```bash
+# Create warehouse schema
+mysql -u root -p fleximart_dw < part3-datawarehouse/warehouse_schema.sql
 
-1. Navigate to each part's directory for specific setup instructions
-2. Install dependencies as specified in each part's README
-3. Follow the execution steps in each part
+# Load sample data
+mysql -u root -p fleximart_dw < part3-datawarehouse/warehouse_data.sql
 
-## Requirements
+# Run analytics queries
+mysql -u root -p fleximart_dw < part3-datawarehouse/analytics_queries.sql
+```
 
-- Python 3.8+
-- PostgreSQL (for Part 1 and Part 3)
-- MongoDB (for Part 2)
-- SQL client for running SQL scripts
+## Project Components
 
-## Data
+### Part 1: Database Design and ETL Pipeline (35 Marks)
 
-Raw data files are provided in the `data/` directory. These files serve as input for the ETL pipeline in Part 1.
+- **ETL Pipeline**: Extracts, transforms, and loads data from CSV files with data quality handling
+- **Schema Documentation**: Complete database schema documentation with normalization explanation
+- **Business Queries**: SQL queries for customer purchase history, product sales analysis, and monthly sales trends
+
+### Part 2: NoSQL Database Analysis (20 Marks)
+
+- **NoSQL Analysis**: Theoretical analysis of RDBMS limitations, NoSQL benefits, and trade-offs
+- **MongoDB Operations**: Implementation of queries, aggregations, and updates on product catalog
+- **Product Catalog**: JSON-based product data with nested structures (specifications, reviews)
+
+### Part 3: Data Warehouse and Analytics (35 Marks)
+
+- **Star Schema Design**: Complete dimensional modeling documentation
+- **Warehouse Implementation**: Star schema with fact and dimension tables
+- **OLAP Queries**: Analytics queries demonstrating drill-down, product performance, and customer segmentation
+
+## Key Learnings
+
+1. **ETL Best Practices**: Learned to handle data quality issues including duplicates, missing values, and format inconsistencies
+2. **Database Design**: Understood normalization principles and when to use relational vs. NoSQL databases
+3. **Dimensional Modeling**: Gained experience in designing star schemas for analytical workloads
+4. **Data Integration**: Explored different data storage paradigms and their appropriate use cases
+
+## Challenges Faced
+
+1. **ID Mapping in ETL**: Mapping original customer/product IDs to auto-increment database IDs required careful design to maintain referential integrity when transforming sales data into orders and order_items.
+
+2. **Data Quality Issues**: Handling various date formats, phone number formats, and missing values required robust transformation logic with appropriate fallback strategies.
+
+3. **Star Schema Design**: Balancing granularity (transaction-level) with query performance required understanding the trade-offs between detailed fact tables and aggregation needs.
+
+## Data Quality
+
+The ETL pipeline handles:
+- Duplicate record removal
+- Missing value handling (drop required fields, fill optional fields)
+- Phone number standardization
+- Category name standardization
+- Date format conversion
+- Data validation and foreign key integrity
+
+## License
+
+This project is created for educational purposes as part of the Data for Artificial Intelligence course.
 
