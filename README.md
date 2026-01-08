@@ -1,8 +1,8 @@
 # FlexiMart Data Architecture Project
 
-**Student Name:** [Your Name]  
-**Student ID:** [Your ID]  
-**Email:** [Your Email]  
+**Student Name:** Gaurvi
+**Student ID:** bitsom_ba_25071607
+**Email:** gaurvirana@gmail.com
 **Date:** 2024
 
 ## Project Overview
@@ -12,7 +12,7 @@ This project demonstrates a comprehensive data architecture solution for FlexiMa
 ## Repository Structure
 
 ```
-studentID-fleximart-data-architecture/
+bitsom_ba_25071607-fleximart-data-architecture/
 │
 ├── README.md                           # Root documentation
 ├── .gitignore                          # Ignore unnecessary files
