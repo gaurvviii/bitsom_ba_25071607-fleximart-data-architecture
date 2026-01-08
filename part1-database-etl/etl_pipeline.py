@@ -488,11 +488,19 @@ def load_orders(connection, sales_df):
             if order_key not in orders_dict:
                 # Create new order
                 order_total = transaction['subtotal']
+                # Get status from transaction, default to 'Completed' if missing
+                status = transaction.get('status', 'Completed')
+                # Ensure status is valid (max 20 chars per schema)
+                if pd.notna(status):
+                    status = str(status)[:20]
+                else:
+                    status = 'Completed'
+                
                 orders_dict[order_key] = {
                     'customer_id': transaction['db_customer_id'],
                     'order_date': transaction['transaction_date'],
                     'total_amount': order_total,
-                    'status': transaction.get('status', 'Completed')
+                    'status': status
                 }
             else:
                 # Add to existing order total

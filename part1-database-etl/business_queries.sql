@@ -72,7 +72,7 @@ FROM
 WHERE 
     YEAR(o.order_date) = 2024
 GROUP BY 
-    MONTHNAME(o.order_date), MONTH(o.order_date)
+    MONTHNAME(o.order_date), MONTH(o.order_date), YEAR(o.order_date)
 ORDER BY 
     month_num;
 

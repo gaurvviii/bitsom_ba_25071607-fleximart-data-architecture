@@ -6,18 +6,25 @@
 // Operation 1: Load Data
 // ============================================================================
 // Import the provided JSON file into collection 'products'
+//
+// IMPORTANT: Before running other operations, you must first import the data:
+// 
+// Using mongoimport command line tool:
+//   mongoimport --db fleximart_catalog --collection products --file products_catalog.json --jsonArray
+//
+// Or using mongosh:
+//   1. Start mongosh: mongosh
+//   2. Switch to database: use fleximart_catalog
+//   3. Load the file (if using mongosh file execution)
+//
+// The products_catalog.json file contains an array of product documents.
+// Each document has: product_id, name, category, price, stock, specifications, reviews, tags, etc.
 
 use('fleximart_catalog');
 
-// Load products from JSON file
-// Note: In MongoDB shell, use: mongoimport --db fleximart_catalog --collection products --file products_catalog.json --jsonArray
-// Or load directly if using mongosh with file execution
-
-// For demonstration, showing the structure:
-// The products_catalog.json file contains an array of product documents
-// Each document has: product_id, name, category, price, stock, specifications, reviews, tags, etc.
-
-print("Operation 1: Data loaded into 'products' collection");
+// Verify data was loaded
+const productCount = db.products.countDocuments();
+print(`Operation 1: ${productCount} products loaded into 'products' collection`);
 
 
 // ============================================================================

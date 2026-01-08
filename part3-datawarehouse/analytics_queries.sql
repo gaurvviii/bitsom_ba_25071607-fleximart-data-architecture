@@ -16,6 +16,8 @@ SELECT
     d.quarter,
     d.month_name,
     COUNT(DISTINCT fs.sale_key) AS total_orders,
+    -- Note: sale_key represents individual line items/transactions
+    -- In a star schema with transaction-level grain, each sale_key is a unique transaction
     SUM(fs.quantity_sold) AS total_quantity,
     SUM(fs.total_amount) AS total_sales
 FROM 

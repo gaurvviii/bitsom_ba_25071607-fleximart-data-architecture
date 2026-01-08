@@ -108,3 +108,19 @@ After running the ETL pipeline, you'll get:
 - `data_quality_report.txt` with statistics on data processing
 - `etl_pipeline.log` with detailed execution logs
 
+## Testing
+
+To verify the ETL pipeline works correctly:
+
+1. **Check Database Connection**: Ensure MySQL/PostgreSQL is running and credentials in `.env` are correct
+2. **Verify Data Files**: Ensure all CSV files exist in `../data/` directory
+3. **Run Pipeline**: Execute `python etl_pipeline.py` and check for errors
+4. **Verify Data Load**: Query the database to confirm records were inserted:
+   ```sql
+   SELECT COUNT(*) FROM customers;
+   SELECT COUNT(*) FROM products;
+   SELECT COUNT(*) FROM orders;
+   SELECT COUNT(*) FROM order_items;
+   ```
+5. **Check Data Quality Report**: Review `data_quality_report.txt` for processing statistics
+
